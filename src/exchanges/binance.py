@@ -13,7 +13,7 @@ class BinanceStream:
         self.symbol = symbol.lower()  # e.g. btcusdt
 
     async def listen(self):
-        stream = f"{self.symbol}@depth20@100ms"
+        stream = f"{self.symbol}@depth5@100ms"
         async with aiohttp.ClientSession() as session:
             async with session.ws_connect(f"{WS_URL}/{stream}") as ws:
                 logger.info(f"Subscribed to Binance {self.symbol}")

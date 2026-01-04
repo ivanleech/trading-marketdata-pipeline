@@ -22,11 +22,13 @@ async def run_consumer():
         async for msg in consumer:
             data = msg.value
             symbol = data["symbol"]
-            bid = data["bids"][0]["price"] if data["bids"] else None
-            ask = data["asks"][0]["price"] if data["asks"] else None
+            bid = data["b"][0] if data["b"] else None
+            bid_volume = data["bv"][0] if data["bv"] else None
+            ask = data["b"][0] if data["a"] else None
+            ask_volume = data["av"][0] if data["av"] else None
             books[symbol] = (bid, ask)
 
-            logger.info(f"{symbol} | bid {bid} | ask {ask}")
+            logger.info(f"{symbol} | Best Bid(Volume): {bid}({bid_volume}) Best Ask(Volume): {ask}({ask_volume})")
     finally:
         await consumer.stop()
 
